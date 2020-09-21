@@ -1,0 +1,211 @@
+Curso CSS y HTML InternetingIsHard
+	
+	RECURSOS:
+		-Patrones de cómo un diseño desktop debe convertirse en un diseño mobile: https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns
+		-Para revisar el outline de la página (semántica) https://gsnedders.html5.org/outliner/
+		-Schema.org microdata lets you alter the appearance of your site in search engine results.
+		-Twitter cards define how your web page is displayed in tweets.
+		-Open Graph metadata changes how Facebook shares your content.
+		-Fuentes:		
+			Website			Price		Quality	Selection
+			Font Squirrel	Free		Hit-or-Miss	Huge
+			Google Fonts	Free		Good	Decent
+			Fontspring		Expensive	Excellent	Huge
+
+	NOTAS:
+		-HTML muestra el contenido semántico. El qué. CSS muestra el cómo.
+		-Se pueden definir los tamaños de las fuentes con px para cada elemento o usar em. Se define el tamaño para el body y de ahí todo relativo en unidades de em.
+		body {
+		  color: #414141;               /* Dark gray */
+		  background-color: #EEEEEE;    /* Light gray */
+		  font-size: 18px;
+		}
+		h1 {
+		  font-size: 2em;
+		}
+		h2 {
+		  font-size: 1.6em;
+		}
+		-Del menos al más precedente en CSS:
+			Estilos del browser
+			Estilos definidos por el usuario
+			CSS externos
+			CSS en el head (page styles)
+			CSS en el elemento (inline styles)
+		-El orden de los <link/> importa. En este ejemplo:
+			<link rel='stylesheet' href='styles.css'/>
+			<link rel='stylesheet' href='blog.css'/>
+			el segundo sobrescribe los estilos del primero o tiene más importancia.
+		-Se podría subir una imagen estática a un servidor y llamarla. Pero no tendría interactividad, los buscadores no la encontrarían y no se podría hacer responsive.
+		-CSS BOX MODEL:
+			-Existen inline elements o block elements. Los blocks definene el flow de la página.
+			-Se le da a cada elemento cuatro propiedades (a los inline y a los block):
+			Content – The text, image, or other media content in the element. (Se define en el html)
+			Padding – The space between the box’s content and its border.
+			Border – The line between the box’s padding and margin.
+			Margin – The space between the box and surrounding boxes.
+			-Padding agrega espacio a cada lado del elemento padding: 50px; Existen propiedades para dar valor a cada lado por separado.
+			padding: 20px 10px; primer valor horizontal, segundo vertical
+			-Border tiene una sintaxis que es tamaño, estilo y color border: 1px solid #5D6063; También se puede poner a un solo lado.
+			Si hay un problema, se le puede poner un borde rojo y mirar cómo el browser lo está renderizando. Solucionar el problema y quitar la regla.
+			-Margen es el espacio entre una caja y otra.
+			-Hay que tener en cuenta cuándo usar margin y cuando padding teniendo en cuenta que el padding es parte del área cliqueable del elemento y que 
+			tiene color. El margen no.
+			-Para los inline elements el margin se ignora arriba y abajo pero no el padding. Eso no afecta los elementos que lo rodean.
+			-Los márgenes colapsan verticalmente. Quiere decir que no se suman sino que se muestra el margen más grande.
+			-Para evitar que colapsen se puede poner un elemento invisible en la mitad y forzar a que se muestren ambas márgenes:
+			<div style='padding-top: 1px'></div>
+			-div es un elemento sin contenido semántico que sirve para darle forma a la página. Su correspondiente en inline es span.
+			-El width: 200px; aplica sólo al contenido del elemento. Se le suma el padding y el margen. Eso hace que sea confuso acomodar las cosas.
+			Para que se calcule de forma total (con padding y margen) el tamaño de una caja se agrega:  box-sizing: border-box; La vuelta es que ahora,
+			el tamaño del contenido se calcula de forma automática, pero es una buena práctica agregarlo a todas las cajas.
+			-Auto margins. Cuando se deja la izquierda y derecha en auto, se centra el elemento automáticamente. margin: 20px auto;
+			-El browser viene con un margen y padding por defecto. Es una buena práctica poner esta regla con el selector * para resetearlo:
+			* {
+			  margin: 0;
+			  padding: 0;
+			  box-sizing: border-box;
+			}
+		-En los nombres de las clases no nombrarlos basados en cómo se ven (como italic) sino en qué son (como synopsis). Los selectores de clases se escribne como así:
+		.synopsis {
+		  color: #7E8184;        /* Light gray */
+		  font-style: italic;
+		}
+		-Cuando hay dos clases que definen un mismo atributo para un elemento, gana la última declarada en el documento. No importa el orden en que se hayan
+		puesto en el tag html.
+		-Se puede acceder a los elementos dentro de otros elementos:
+		.synopsis em {
+			font-style: normal;
+		}
+		-Pseudoclases para links. Las más importantes son: 
+			:link – A link the user has never visited.
+			:visited – A link the user has visited before.
+			:hover – A link with the user’s mouse over it.
+			:active – A link that’s being pressed down by a mouse (or finger).
+			Si quiero que el comportamiento de hover sea diferente para un link que ha sido visitado y uno que no hago esto:
+				a:visited:hover {
+				  color: orange;
+				}
+			de esa manera se logra que se pinte de color naranjado cuando alguien lo toque y ya haya sido visitado.
+		-Pseudoclases para botones.
+		-Pseudoclases para estructuras.
+			p:last-of-type{..} sirve para seleccionar el último párrafo.
+			p:first-of-type también es opción.
+			Esas dos opciones hacen la selección en cada parent, es decir que si uno tiene varios párrafos agrupados en divs, selecciona el primero 
+			y el último de cada uno de esos divs. Puede ocasionar problemas.
+		-Para seleccionar el id de un elemento html específico se hace así:	#button-2 {..}	donde button-2 es el id del elemento.	
+		-El problema es que esos estilos no se pueden reutilizar. Tocaría darle un id a todos y hacer algo como esto: #button-2,#button-3{..}
+		-Specificity habla de cuál selector es más importante que otro. Si uno hace un selector con id (#), no importa que más abajo haga una regla de lo mismo
+		con clases (.). El de id prevalece sobre el de clases aunque el de id esté al principio del documento. Hay otras especificaciones adicionales a esas dos.
+		-BEM es una metodología que apunta a que todos sean selectores de clases y disminuir la complejidad de eso. http://getbem.com/introduction/
+		-FLOATS:
+			-Permite manejar el layout de una página. float: left; por defecto es float: none; Para que quede centrado se usa margin: 0 auto.
+			-En CSS todo es una caja dentro de otra caja, dentro de otra caja.
+			-Para que se tengan en cuenta los floats para acomodar las cajas siguientes, se debe añadir la propiedad clear:both; al elemento siguiente. De lo contrario
+			ese elemento quedará pegado verticalmente al último elemento sin floats. Se usa both (vertical y horizontal) pero puede ser para uno solo.
+			-Cuando no hay un elemento con clear dentro del div, hay que usar la propiedad  overflow: hidden; para que los floats cuenten en la altura del div.
+		-FLEXBOX: 
+			-Se habilita un elemento diciendo display:flex; ese elemento se va a renderizar con flex, pero puede estar al lado de otros que se renderizan
+			con cualquier otra técnica.
+			-Se le dice el comportamiento de ubicación al contenedor, no al elemento. justify-content: center; otros posibles valores son: flex-start, flex-end
+			space-around, space-between.
+			-Para el ordenamiento vertical se usa align-items. Los valores son similares center, flex-start   (top), flex-end      (bottom), stretch, baseline
+			-Para que los elementos que no caben horizontalmente se apilen abajo y no al lado, se usa la propiedad flex-wrap: wrap;
+			-Para que se apilen de forma vertical y no horizontal:  flex-direction: column; Cuando se usa esa propiedad el align-items pasa a ser horizontal y el
+			justify-content pasa a ser vertical.
+			-Con flex-directio: row-reverse; o con column-reverse; se muestran los elementos de derecha a izquierda o arriba a abajo.
+			-La propiedad order: 1; se pone dentro del elemento y no dentro del contenedor. Sirve para indicar el orden del elemento. Por defecto es 0 y se pueden
+			usar negativos.
+			-align-self: flex-end; sirve para alinear un elemento individualmente. Ignora el align-items del parent.
+			-La propiedad flex: 2; permite que un elemento se amplíe el doble que los que tienen flex: 1; por ejemplo;. Si se ponee flex: initial; no se va a mover
+			y el width va a ser el establecido.
+			-Con la propiedad margin-left: auto; se corre un elemento y todos los demás hacia el borde derecho.
+		-POSITION:
+			-Por defecto la propiedad position es static. Cuando se cambia, se dice que es un positioned element y permite sacar un elemento del esquema actual.
+			-Relative: mueve un objeto teniendo en cuenta la posición que debería tener si fuera por el static flow.
+				.item-relative {
+				  position: relative;
+				  top: 30px;
+				  left: 30px;
+				}
+				También se pude hacer así:
+				.item-relative {
+				  position: relative;
+				  bottom: 30px;
+				  right: 30px;
+				}
+				Acepta números negativos.
+			-Absolute: es igual que el anterior pero se toma como referencia el parent positioned más cercano. Si no hay uno, se toma como referencia el browser.
+				.item-absolute {
+				  position: absolute;
+				  top: 10px;
+				  left: 10px;
+				}
+				-Remueve el elemento del parent. No es muy usado porque implica que se va a usar en todos los elementos para evitar que se estén traslapando
+				estos con los estáticos.
+				-Se puede decirle al parent que sea  position: relative; y no darle coordenadas. Eso hace que sea un elemento posicionado pero que se acomode
+				al flow de la página. Dentro poner un elemento absolute. De esa manera se evita el problema de desarreglar la página mezclando elementos 
+				estáticos con posicionados.
+			-Fixed:Es lo mismo que absolute pero no se mueven con el scroll de la página.
+				.item-fixed {
+				  position: fixed;
+				  bottom: 0;
+				  right: 0;
+				}
+				Así se pone un ítem en la parte inferior derecha de la pantalla, por ejemplo para un chat de ayuda.
+				-Sirve para hacer animaciones. Por ejemplo:
+				<script>
+				  var left = 0;
+
+				  function frame() {
+					var element = document.querySelector('.item-relative');
+					left += 2;
+					element.style.left = left + 'px';
+					if (left >= 300) {
+					  clearInterval(id)
+					}
+				  }
+
+				  var id = setInterval(frame, 10)
+				</script>
+		-Los navigations generlamente se crean como ul en lugar de divs para hacer que el sitio sea más navegable para motores de búsqueda.
+		-z-index: 2; permite manejar los problemas de profundidad. Indica qué elemento va a ser visible cuando uno esté encima del otro. Entre más alto sea el
+		número, más visible es. El valor por defecto es 0. Sólo aplica para positioned elements.
+		-display: none; desaparece un elemento.
+		-CSS MEDIA QUERIES:
+			@media only screen and (min-width: 401px) and (max-width: 960px) {
+				body {
+					background-color: #F5CF8E; /* Yellow */
+				}
+			}
+			@media: es un at-rule
+			only screen: Media type. Significa que aplica sólo para la pantalla y no cuando imprimen la página con ctrl+P.
+			(min-width: 401px) and (max-width: 960px): Son dos media features. 
+			Adentro van reglas de CSS comunes y corrientes.
+			-Se usan fixed-width (no flexibles) diseños para web y fluid (que se van adaptando al tamaño) para celulares y tablets.
+			-Los fluids permiten hacer diseños para un rango de tamaño (ejm 400x700) no para un dispositivo específico.
+			-Es un buen método diseñar primero para mobile. Luego ir subiendo. Mobile no exige mucho en layout porque todo se muestra verticalmente apilado.
+			-También es buena práctica poner algunas reglas generales fuera de los media. De esa manera se pueden hacer cambios que afectan el sitio sin
+			importar en qué dispositivo se esté viendo.
+			-Para hacer efectivos los cambios de los sitios responsive hay que desahibilitar el zoom en los dispositivos pequeños. Se hace poniendo esto en 
+			el head: <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+		-SEMANTIC HTML: Los niveles de h1 a h6 sirven para indicar cuál sección es más importante y cuál está contenida en otra. Sirve para orientar a los buscadores
+		y robots que leen páginas para ciegos.
+			-<article> sirve para algo que se podría sacar directamente de la página y tendría sentido sin lo demás. Por ejemplo para ponerla en flipboard.com.
+			-<section> es como un article pero no tiene que tener sentido por fuera de la página. Permite manipular el outline de la página independiente de los
+			headings que tenga. Puede ser que por fuera haya un h6, luego el section con un h2. De todas maneras el h2 ese va a quedar un  nivel debajo porque está
+			dentro del section. Eso quiere decir que cada section tiene sus h1 a h6 independientes de todo el resto del documento. De todas maneras no se debe usar
+			como manipulador del outline porque los motores de búsqueda se basan en los headers, no en los sections. Se usa section como reemplazo en este caso de div.
+			-Cada section debe tener un heading porque sino se agrega un head sin nombre en el outline.
+			-<nav> para los menús y los grupos de links. Se puede encapsular el ul dentro de un nav para darle más información a los buscadores.
+			-<header> para los encabezados. No confundir con los headings (h1 a h6). Es una buena práctica encapsular el logo y el nav principal en un header.
+			También puede usarse por ejemplo para el título y el nombre del autor de un article.
+			-<footer> se comporta igual a header, sólo que se usa al final de un articulo como nota final o al final de una página.
+			-<aside> sirve para indicar que algo que está en el cuerpo de un artículo, es sólo tangencial. Como por ejemplo una publicidad. Cuando no está dentro
+			de un article, sirve para por ejemplo hacer una barra lateral al lado derecho.
+			-Se pueden usar divs para el layout de la página. Es peor usar los tags semánticos mal que no usarlos. Si hay dudas es mejor usar un div.
+			-<time> Los timestamps son muy difíciles de manejar. Para eso es este tag. <time datetime='2017-1-3'>January 3rd</time> El formato es del más grande al
+			más pequeño periodo. Año, mes, día, hora, minuto, segundo, etc.
+			-<address> no es para direcciones físicas.   <address>Please contact <a href='mailto:troymcclure@example.com'>TroyMcClure</a> for questions about this article.</address>
+		-FORMS: get cuando se va a traer información y post cuando se va a enviar info a la BD.
+		
